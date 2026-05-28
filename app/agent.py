@@ -138,12 +138,14 @@ def build_agent(
         api_key=api_key,
         base_url=base_url,
         temperature=0.1,
+        extra_body={"chat_template_kwargs": {"enable_thinking": False}},
     )
     router_llm = ChatOpenAI(
         model=router_model_name,
         api_key=api_key,
         base_url=base_url,
         temperature=0.0,
+        extra_body={"chat_template_kwargs": {"enable_thinking": False}},
     )
 
     llm_with_tools = main_llm.bind_tools(ALL_TOOLS)
