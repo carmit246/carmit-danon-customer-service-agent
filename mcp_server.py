@@ -184,7 +184,7 @@ def show_examples(
     if df.empty:
         return {"error": "No records match the given filters.", "examples": []}
     n = max(1, min(n, 20, len(df)))
-    sample = df.sample(n=n, random_state=42)
+    sample = df.sample(n=n)
     return {
         "examples": sample[["instruction", "intent", "category", "response"]].to_dict(
             orient="records"
@@ -255,7 +255,7 @@ def get_sample_for_summary(
     if df.empty:
         return {"error": "No records match the given filters.", "sample": []}
     n = max(5, min(n, 50, len(df)))
-    sample = df.sample(n=n, random_state=42)
+    sample = df.sample(n=n)
     entries: list[dict] = []
     for _, row in sample.iterrows():
         entry: dict = {"instruction": row["instruction"], "intent": row["intent"]}
