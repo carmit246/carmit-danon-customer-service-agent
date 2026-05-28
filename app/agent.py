@@ -250,6 +250,9 @@ def build_agent(
         if state.get("iterations", 0) >= MAX_ITERATIONS:
             return "max_iterations"
 
+        if not state.get("messages"):
+            return "end"
+
         last_msg = state["messages"][-1]
         if hasattr(last_msg, "tool_calls") and last_msg.tool_calls:
             return "continue"

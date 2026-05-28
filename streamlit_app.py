@@ -329,9 +329,12 @@ def main() -> None:
             )
         elif action == "refine":
             # Generate a revised suggestion
-            messages_for_rec = _get_agent(_get_checkpointer()).get_state(
-                {"configurable": {"thread_id": session_id}}
-            ).values.get("messages", [])
+            try:
+                messages_for_rec = _get_agent(_get_checkpointer()).get_state(
+                    {"configurable": {"thread_id": session_id}}
+                ).values.get("messages", [])
+            except Exception:
+                messages_for_rec = []
             new_rec = refine(pending, user_input, messages_for_rec, profile_context, llm)
             st.session_state.pending_recommendation = new_rec
             suggestion_text = (
@@ -391,6 +394,7 @@ def main() -> None:
             final_answer, reasoning_steps = _run_query(actual_query, session_id, profile_context)
         except Exception as exc:
             st.error(f"Agent error: {exc}")
+            st.rerun()  # ensure the user message added above is rendered
             return
 
     # ── Store assistant response ───────────────────────────────────────────────

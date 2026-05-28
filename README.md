@@ -13,10 +13,10 @@ A LangGraph-based ReAct agent that answers questions about the
 
 | Role | Model | Reason |
 |---|---|---|
-| ReAct agent (main) | `Qwen/Qwen3-235B-A22B` | State-of-the-art reasoning, strong native tool-use / function-calling support, excellent instruction following. |
+| ReAct agent (main) | `Qwen/Qwen3-235B-A22B-Instruct-2507` | State-of-the-art reasoning, strong native tool-use / function-calling support, excellent instruction following. |
 | Query router | `Qwen/Qwen3-32B` | Lighter and faster for the simple classification task; 3-class output (structured / unstructured / out_of_scope) needs no heavy reasoning. |
 
-Both models are accessed exclusively via the **Nebius Token Factory** API.
+Both models are accessed via the **Nebius Token Factory** API.
 
 ### Graph Topology
 
@@ -81,7 +81,7 @@ router  ─── out_of_scope ──► END  (polite decline)
 ### 1. Clone & create a virtual environment
 
 ```bash
-git clone https://github.com/<your-handle>/carmit-danon-customer-service-agent.git
+git clone https://github.com/carmit246/carmit-danon-customer-service-agent.git
 cd carmit-danon-customer-service-agent
 python3 -m venv .venv
 source .venv/bin/activate          # Windows: .venv\Scripts\activate
@@ -297,5 +297,5 @@ carmit-danon-customer-service-agent/
 |---|---|---|
 | `NEBIUS_API_KEY` | — | **Required.** Your Nebius Token Factory API key. |
 | `NEBIUS_BASE_URL` | `https://api.studio.nebius.com/v1/` | Nebius API base URL. |
-| `MAIN_MODEL` | `Qwen/Qwen3-235B-A22B` | Model for the ReAct reasoning loop. |
+| `MAIN_MODEL` | `Qwen/Qwen3-235B-A22B-Instruct-2507` | Model for the ReAct reasoning loop. |
 | `ROUTER_MODEL` | `Qwen/Qwen3-32B` | Model for query classification. |

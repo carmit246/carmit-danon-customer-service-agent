@@ -323,8 +323,11 @@ def main() -> None:
                         pending_recommendation = None
 
                     elif action == "refine":
-                        snap = agent.get_state({"configurable": {"thread_id": args.session}})
-                        msgs = snap.values.get("messages", [])
+                        try:
+                            snap = agent.get_state({"configurable": {"thread_id": args.session}})
+                            msgs = snap.values.get("messages", [])
+                        except Exception:
+                            msgs = []
                         pending_recommendation = refine(
                             pending_recommendation, query, msgs, profile_context, profile_llm
                         )
