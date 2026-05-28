@@ -269,6 +269,7 @@ def main() -> None:
         api_key=os.environ["NEBIUS_API_KEY"],
         base_url=os.environ.get("NEBIUS_BASE_URL", "https://api.studio.nebius.com/v1/"),
         temperature=0.0,
+        extra_body={"chat_template_kwargs": {"enable_thinking": False}},
     )
 
     # ── Load user profile ──────────────────────────────────────────────────────
