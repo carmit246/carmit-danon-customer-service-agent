@@ -238,7 +238,7 @@ def show_examples(
             "total_matching": 0,
         }
 
-    sample = df.sample(n=min(n, len(df)), random_state=42)
+    sample = df.sample(n=min(n, len(df)))
     examples = sample[["instruction", "intent", "category", "response"]].to_dict(
         orient="records"
     )
@@ -328,7 +328,7 @@ def get_sample_for_summary(
             "sample_size": 0,
         }
 
-    sample = df.sample(n=min(n, len(df)), random_state=42)
+    sample = df.sample(n=min(n, len(df)))
 
     entries: list[dict[str, str]] = []
     for _, row in sample.iterrows():
