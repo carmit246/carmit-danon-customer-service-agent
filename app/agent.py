@@ -297,3 +297,8 @@ def build_agent(
     graph.add_edge("fallback", END)
 
     return graph.compile(checkpointer=checkpointer)
+
+
+def build_graph():
+    """Zero-argument factory for LangGraph Studio (`langgraph dev`)."""
+    return build_agent()

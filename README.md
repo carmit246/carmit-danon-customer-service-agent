@@ -197,22 +197,23 @@ npx @modelcontextprotocol/inspector python3 mcp_server.py
 **Python async client (stdio):**
 ```python
 import asyncio
+from pathlib import Path
 from fastmcp import Client
 
 async def main():
-    async with Client("python3 mcp_server.py") as client:
+    async with Client(Path("mcp_server.py")) as client:
         # List available tools
         tools = await client.list_tools()
         print([t.name for t in tools])
 
         # Call a tool
         result = await client.call_tool("get_categories", {})
-        print(result)
+        print(result.data)
 
         result = await client.call_tool(
             "count_records", {"category": "REFUND"}
         )
-        print(result)
+        print(result.data)
 
 asyncio.run(main())
 ```
@@ -223,6 +224,44 @@ async with Client("http://localhost:8000/sse") as client:
     result = await client.call_tool("get_categories", {})
     print(result)
 ```
+
+### test-mcp
+
+Smoke-test the MCP server without starting a separate process or client manually.
+`test_mcp.py` spawns `mcp_server.py` over stdio, lists every tool, and calls each
+one with sample arguments:
+
+```bash
+python3 test_mcp.py
+```
+
+Expected output ends with `All tests passed!` No API key is required — only the
+dataset (downloaded on first run).
+
+---
+
+## LangGraph Studio
+
+Visualise and debug the agent graph interactively using [LangGraph Studio](https://smith.langchain.com/studio).
+
+```bash
+# Start the local dev server (auto-reloads on file changes)
+langgraph dev
+```
+
+Then open the URL printed in the terminal:
+
+```
+🎨 Studio UI: https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024
+```
+
+Studio lets you:
+- **Visualise** the full graph topology (router → agent → tools → fallback)
+- **Step through** individual runs node by node
+- **Inspect** state at each checkpoint (messages, query_type, iterations)
+- **Replay or fork** any past run
+
+The `langgraph.json` in the project root configures the server. No extra setup is needed beyond installing dependencies.
 
 ---
 
@@ -271,6 +310,7 @@ and is shared between the CLI and the Streamlit UI.
 carmit-danon-customer-service-agent/
 ├── main.py              ← CLI (--session, --debug, Bonus B recommender)
 ├── mcp_server.py        ← FastMCP server (Task 3, --sse flag)
+├── test_mcp.py          ← MCP smoke test (test-mcp)
 ├── streamlit_app.py     ← Streamlit chat UI (Bonus A + Bonus B)
 ├── requirements.txt
 ├── .env.example

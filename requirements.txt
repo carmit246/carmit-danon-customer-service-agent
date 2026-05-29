@@ -9,5 +9,7 @@ pydantic>=2.7.0
 python-dotenv>=1.0.0
 rich>=13.7.0
 huggingface-hub>=0.23.0
-fastmcp>=2.0.0
+fastmcp>=3.0.0
 streamlit>=1.35.0
+# LangGraph Studio (local dev)
+langgraph-cli[inmem]>=0.1.0
